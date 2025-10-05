@@ -1,16 +1,75 @@
-# React + Vite
+# **Frontend**
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+---
 
-Currently, two official plugins are available:
+## **Features**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **User Authentication**: Secure user registration and login functionality.
+- **Ticket Management**: Users can create, view, and comment on their support tickets.
+- **Role-Based Views**: The interface adapts based on user roles (user, agent, admin), showing relevant information and actions.
+- **Ticket Assignment**: Agents and admins can assign tickets to themselves or other agents.
+- **Status Updates**: Agents and admins can update the status of tickets (e.g., open, closed).
+- **Protected Routes**: Ensures that only authenticated users can access the main application features.
+- **Responsive Design**: A clean and responsive layout for a seamless experience across devices.
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## **Getting Started**
 
-## Expanding the ESLint configuration
+### **Prerequisites**
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- Node.js and npm (or yarn) installed on your machine.
+- A running instance of the HelpDesk backend server.
+
+### **Installation & Setup**
+
+1. **Clone the repository:**  
+   Bash  
+   git clone https://github.com/lakshya5025/helpdesk\_\_hackathon-project.git  
+   cd helpdesk\_\_hackathon-project/client
+
+2. **Install dependencies:**  
+   Bash  
+   npm install
+
+3. Configure the API endpoint:  
+   Ensure the API_URL in the components and pages points to your running backend server (e.g., http://localhost:8080/api).
+4. **Run the development server:**  
+   Bash  
+   npm run dev
+
+   The application will be available at http://localhost:5173.
+
+---
+
+## **Folder Structure**
+
+/src  
+|-- /assets  
+|-- /components  
+| |-- Header.jsx  
+| |-- ProtectedRoute.jsx  
+| |-- TicketAssignment.jsx  
+| \`-- TicketStatusUpdater.jsx  
+|-- /context  
+| \`-- AuthContext.jsx  
+|-- /pages  
+| |-- LoginPage.jsx  
+| |-- NewTicketPage.jsx  
+| |-- RegisterPage.jsx  
+| |-- TicketDetailPage.jsx  
+| \`-- TicketsPage.jsx  
+|-- App.css  
+|-- App.jsx  
+|-- index.css  
+\`-- main.jsx
+
+---
+
+## **Technologies Used**
+
+- **React**: For building the user interface.
+- **React Router**: For client-side routing and navigation.
+- **Axios**: For making HTTP requests to the backend API.
+- **Vite**: As the frontend build tool and development server.
+- **ESLint**: For code linting and maintaining code quality.
