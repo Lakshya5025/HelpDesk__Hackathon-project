@@ -10,6 +10,7 @@ import authRoutes from './routes/authRoutes.js';
 import ticketRoutes from './routes/ticketRoutes.js';
 import userRouter from "./routes/userRoutes.js";
 const app = express();
+app.set('trust proxy', 1);
 app.use(express.json());
 app.use(idempotencyCheck);
 app.use(cookieParser());
