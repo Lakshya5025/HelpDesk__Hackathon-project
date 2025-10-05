@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { useParams, Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
@@ -102,20 +102,22 @@ function TicketDetailPage() {
           <p>No comments yet.</p>
         )}
       </div>
-      <div className="comment-form">
-        <h3>Add a Comment</h3>
-        <form onSubmit={onCommentSubmit}>
-          <textarea
-            value={commentText}
-            onChange={(e) => setCommentText(e.target.value)}
-            placeholder="Type your comment here..."
-            rows={4}
-            required></textarea>
-          <button type="submit" className="btn">
-            Submit Comment
-          </button>
-        </form>
-      </div>
+      {ticket.status == "open" ? (
+        <div className="comment-form">
+          <h3>Add a Comment</h3>
+          <form onSubmit={onCommentSubmit}>
+            <textarea
+              value={commentText}
+              onChange={(e) => setCommentText(e.target.value)}
+              placeholder="Type your comment here..."
+              rows={4}
+              required></textarea>
+            <button type="submit" className="btn">
+              Submit Comment
+            </button>
+          </form>
+        </div>
+      ) : null}
     </div>
   );
 }
