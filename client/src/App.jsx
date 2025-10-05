@@ -6,6 +6,8 @@ import TicketsPage from "./pages/TicketsPage";
 import NewTicketPage from "./pages/NewTicketPage";
 import TicketDetailPage from "./pages/TicketDetailPage";
 import ProtectedRoute from "./components/ProtectedRoute";
+import AdminRoute from "./components/AdminRoute";
+import CreateAgentPage from "./pages/CreateAgentPage";
 
 function App() {
   return (
@@ -21,6 +23,10 @@ function App() {
             <Route path="/tickets" element={<TicketsPage />} />
             <Route path="/tickets/new" element={<NewTicketPage />} />
             <Route path="/tickets/:id" element={<TicketDetailPage />} />
+          </Route>
+
+          <Route element={<AdminRoute />}>
+            <Route path="/create-agent" element={<CreateAgentPage />} />
           </Route>
         </Routes>
       </div>

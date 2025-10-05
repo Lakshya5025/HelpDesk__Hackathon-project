@@ -27,6 +27,11 @@ function Header() {
         {user ? (
           <>
             <li>Welcome, {user.name}</li>
+            {user.role === "admin" && (
+              <li>
+                <Link to="/create-agent">Create Agent</Link>
+              </li>
+            )}
             <li>
               <button className="logout-btn" onClick={onLogout}>
                 Logout
