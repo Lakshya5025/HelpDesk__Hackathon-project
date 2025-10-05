@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+const API_URL = `${import.meta.env.VITE_API_URL}/api/tickets`;
 
 function TicketStatusUpdater({ ticket, onTicketUpdate }) {
   const handleStatusChange = async (newStatus) => {
@@ -7,7 +8,7 @@ function TicketStatusUpdater({ ticket, onTicketUpdate }) {
 
     try {
       const response = await axios.patch(
-        `http://localhost:8080/api/tickets/${ticket._id}`,
+        `${API_URL}/${ticket._id}`,
         { status: newStatus, version: ticket.version },
         { withCredentials: true }
       );

@@ -4,6 +4,7 @@ import { useParams, Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import TicketAssignment from "../components/TicketAssignment";
 import TicketStatusUpdater from "../components/TicketStatusUpdater";
+const API_URL = `${import.meta.env.VITE_API_URL}/api/tickets`;
 
 function TicketDetailPage() {
   const [ticket, setTicket] = useState(null);
@@ -15,10 +16,9 @@ function TicketDetailPage() {
   const fetchTicket = async () => {
     try {
       setIsLoading(true);
-      const response = await axios.get(
-        `http://localhost:8080/api/tickets/${id}`,
-        { withCredentials: true }
-      );
+      const response = await axios.get(`${API_URL}/${id}`, {
+        withCredentials: true,
+      });
       setTicket(response.data);
     } catch (err) {
       console.error("Could not fetch ticket", err);
@@ -36,7 +36,7 @@ function TicketDetailPage() {
     e.preventDefault();
     try {
       await axios.post(
-        `http://localhost:8080/api/tickets/${id}/comments`,
+        `${API_URL}/${id}/comments`,
         { text: commentText },
         { withCredentials: true }
       );

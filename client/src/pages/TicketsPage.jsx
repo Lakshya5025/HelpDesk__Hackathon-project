@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+const API_URL = `${import.meta.env.VITE_API_URL}/api/tickets`;
 
 function TicketsPage() {
   const [tickets, setTickets] = useState([]);
@@ -10,7 +11,7 @@ function TicketsPage() {
   useEffect(() => {
     const fetchTickets = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/api/tickets", {
+        const response = await axios.get(`${API_URL}`, {
           withCredentials: true,
         });
         setTickets(response.data.items);

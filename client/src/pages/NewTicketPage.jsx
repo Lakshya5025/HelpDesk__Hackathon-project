@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+const API_URL = `${import.meta.env.VITE_API_URL}/api/tickets`;
 function NewTicketPage() {
   const [formData, setFormData] = useState({
     title: "",
@@ -19,7 +19,7 @@ function NewTicketPage() {
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:8080/api/tickets", formData, {
+      await axios.post(`${API_URL}`, formData, {
         withCredentials: true,
       });
       console.log("Ticket created successfully!");

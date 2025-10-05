@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect } from "react";
 import axios from "axios";
+const API_URL = `${import.meta.env.VITE_API_URL}/api/auth/me`;
 
 export const AuthContext = createContext(null);
 
@@ -10,7 +11,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const checkUserSession = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/api/auth/me", {
+        const response = await axios.get(`${API_URL}`, {
           withCredentials: true,
         });
         setUser(response.data);

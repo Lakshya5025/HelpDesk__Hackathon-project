@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
+const API_URL = `${import.meta.env.VITE_API_URL}`;
 
 function TicketAssignment({ ticket, onTicketUpdate }) {
   const [agents, setAgents] = useState([]);
@@ -11,10 +12,9 @@ function TicketAssignment({ ticket, onTicketUpdate }) {
     if (user && user.role === "admin") {
       const fetchAgents = async () => {
         try {
-          const { data } = await axios.get(
-            "http://localhost:8080/api/users/agents",
-            { withCredentials: true }
-          );
+          const { data } = await axios.get(`${API_URL}/api/users/agents`, {
+            withCredentials: true,
+          });
           setAgents(data);
         } catch (error) {
           console.error("Could not fetch agents", error);
@@ -30,7 +30,7 @@ function TicketAssignment({ ticket, onTicketUpdate }) {
     }
     try {
       const response = await axios.patch(
-        `http://localhost:8080/api/tickets/${ticket._id}`,
+        `${API_URL}/tickets/${ticket._id}`,
         { assignedTo: agentIdToAssign, version: ticket.version },
         { withCredentials: true }
       );

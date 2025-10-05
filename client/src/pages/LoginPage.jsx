@@ -3,8 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 
-const API_URL = "http://localhost:8080/api/auth/login";
-
+const API_URL = `${import.meta.env.VITE_API_URL}/api/auth/login`;
 function LoginPage() {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const navigate = useNavigate();
