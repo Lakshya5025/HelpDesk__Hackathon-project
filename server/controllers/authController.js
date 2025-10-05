@@ -24,8 +24,12 @@ export const registerUser = async (req, res) => {
         }
 
         const user = await User.create({ name, email, password, role });
-
-        res.status(201).json(user);
+        const token = generateToken(user._id);
+        res.cookie('token', token, {
+            secure: process.env.NODE_ENV !== 'development',
+            sameSite: 'strict',
+            maxAge: 10 * 24 * 60 * 60 * 1000
+        }).status(201).json(user);
     } catch (error) {
         res.status(500).json({ message: 'Server Error', error: error.message });
     }
@@ -39,7 +43,12 @@ export const loginUser = async (req, res) => {
         const user = await User.findOne({ email });
         const { _id, name, role } = user;
         if (user && (await bcrypt.compare(password, user.password))) {
-            res.status(200).json({
+            const token = generateToken(user._id);
+            res.cookie('token', token, {
+                secure: process.env.NODE_ENV !== 'development',
+                sameSite: 'strict',
+                maxAge: 10 * 24 * 60 * 60 * 1000
+            }).status(200).json({
                 _id, name, email, role,
                 token: generateToken(user._id),
             });
