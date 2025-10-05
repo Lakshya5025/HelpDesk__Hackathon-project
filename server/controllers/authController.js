@@ -71,6 +71,12 @@ export const getMe = async (req, res) => {
 };
 
 export const logout = (req, res) => {
+    const cookieOptions = {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'none',
+    };
+
     return res
         .clearCookie("token", cookieOptions)
         .status(200)
