@@ -43,8 +43,8 @@ export const loginUser = async (req, res) => {
             return res.status(400).json({ message: "email and password required" });
         }
         const user = await User.findOne({ email });
-        const { _id, name, role } = user;
         if (user && (await bcrypt.compare(password, user.password))) {
+            const { _id, name, role } = user;
             const token = generateToken(user._id);
             res.cookie('token', token, {
                 secure: process.env.NODE_ENV !== 'development',
@@ -58,6 +58,7 @@ export const loginUser = async (req, res) => {
             res.status(401).json({ message: 'Invalid email or password.' });
         }
     } catch (error) {
+        console.log(error);
         res.status(500).json({ message: 'Server Error', error: error.message });
     }
 };
