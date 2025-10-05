@@ -29,7 +29,8 @@ export const registerUser = async (req, res) => {
             httpOnly: true,
             secure: true,
             sameSite: 'none',
-            maxAge: 10 * 24 * 60 * 60 * 1000
+            domain: '.onrender.com',
+            maxAge: 30 * 24 * 60 * 60 * 1000
         }).status(201).json(user);
     } catch (error) {
         res.status(500).json({ message: 'Server Error', error: error.message });
@@ -51,7 +52,8 @@ export const loginUser = async (req, res) => {
                 httpOnly: true,
                 secure: true,
                 sameSite: 'none',
-                maxAge: 10 * 24 * 60 * 60 * 1000
+                domain: '.onrender.com',
+                maxAge: 30 * 24 * 60 * 60 * 1000
             }).status(200).json({
                 _id, name, email, role,
                 token: generateToken(user._id),
