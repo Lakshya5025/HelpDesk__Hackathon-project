@@ -1,5 +1,6 @@
 import * as dotenv from "dotenv";
 dotenv.config();
+import apiLimiter from './middleware/rateLimiter.js';
 import express from "express";
 import mongoose from "mongoose";
 import cookieParser from 'cookie-parser';
@@ -20,7 +21,7 @@ app.use(
 );
 
 
-
+app.use('/api/', apiLimiter);
 app.use('/api/auth', authRoutes);
 app.use('/api/tickets', ticketRoutes);
 
