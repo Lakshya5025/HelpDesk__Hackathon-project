@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 
 function TicketsPage() {
   const [tickets, setTickets] = useState([]);
-  const [isLoading, setIsLoading] = useState(true); // Add loading state
-  const [error, setError] = useState(null); // Add error state
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchTickets = async () => {
@@ -18,7 +18,7 @@ function TicketsPage() {
         console.error("Could not fetch tickets", err);
         setError("Failed to load tickets. Please make sure you are logged in.");
       } finally {
-        setIsLoading(false); // Stop loading once done
+        setIsLoading(false);
       }
     };
 

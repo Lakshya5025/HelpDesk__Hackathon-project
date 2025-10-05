@@ -19,17 +19,14 @@ export const createTicket = async (req, res) => {
 };
 
 
-// ... (imports and other functions)
 
 export const getTickets = async (req, res) => {
     try {
         const limit = parseInt(req.query.limit) || 10;
         const offset = parseInt(req.query.offset) || 0;
 
-        // --- LOGIC CHANGE IS HERE ---
-        let query = {}; // Start with an empty query to get all tickets
+        let query = {};
 
-        // If the user is NOT an agent or admin, restrict the query to their own tickets
         if (req.user.role !== 'agent' && req.user.role !== 'admin') {
             query.user = req.user._id;
         }
@@ -55,10 +52,6 @@ export const getTickets = async (req, res) => {
     }
 };
 
-// ... (rest of the functions)
-
-
-// ... (other functions)
 
 export const getTicketById = async (req, res) => {
     try {
@@ -68,8 +61,7 @@ export const getTicketById = async (req, res) => {
             return res.status(404).json({ message: 'Ticket not found.' });
         }
 
-        // --- LOGIC CHANGE IS HERE ---
-        // Allow access if the user is an agent/admin OR if they own the ticket
+
         const isOwner = ticket.user.toString() === req.user._id.toString();
         const isAgentOrAdmin = req.user.role === 'agent' || req.user.role === 'admin';
 
@@ -92,31 +84,25 @@ export const updateTicket = async (req, res) => {
             return res.status(404).json({ message: 'Ticket not found.' });
         }
 
-        // Optimistic Locking Check
         if (version !== undefined && ticket.version !== version) {
             return res.status(409).json({ message: 'Conflict: Ticket has been modified. Please refresh.' });
         }
 
-        // --- NEW ASSIGNMENT LOGIC ---
         if (assignedTo) {
-            // An admin can assign to anyone.
             if (req.user.role === 'admin') {
                 ticket.assignedTo = assignedTo;
             }
-            // An agent can ONLY assign a ticket to themselves.
             else if (req.user.role === 'agent') {
                 if (assignedTo !== req.user._id.toString()) {
                     return res.status(403).json({ message: 'Agents can only assign tickets to themselves.' });
                 }
                 ticket.assignedTo = assignedTo;
             }
-            // A regular user cannot assign tickets.
             else {
                 return res.status(403).json({ message: 'Not authorized to assign tickets.' });
             }
         }
 
-        // Update status if provided
         ticket.status = status || ticket.status;
 
         const updatedTicket = await ticket.save();
@@ -126,7 +112,6 @@ export const updateTicket = async (req, res) => {
     }
 };
 
-// ... (rest of the controller is the same)
 
 
 export const addComment = async (req, res) => {

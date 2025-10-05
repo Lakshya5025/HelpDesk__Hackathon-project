@@ -1,12 +1,14 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { AuthContext } from "../context/AuthContext";
 
 const API_URL = "http://localhost:8080/api/auth/login";
 
 function LoginPage() {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
 
   const onChange = (e) => {
     setFormData((prevState) => ({
@@ -18,16 +20,20 @@ function LoginPage() {
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(API_URL, formData, { withCredentials: true });
+      const response = await axios.post(API_URL, formData, {
+        withCredentials: true,
+      });
 
-      navigate("/"); // Navigate to the main page
+      login(response.data);
+
+      alert("Login successful!");
+      navigate("/");
     } catch (error) {
       alert("Login failed. Check your credentials.");
       console.error(error);
     }
   };
 
-  // ... (rest of the JSX is the same)
   return (
     <div className="form-container">
       <h2>Login</h2>

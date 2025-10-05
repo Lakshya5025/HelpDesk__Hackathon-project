@@ -3,16 +3,16 @@ import axios from "axios";
 
 function TicketStatusUpdater({ ticket, onTicketUpdate }) {
   const handleStatusChange = async (newStatus) => {
-    if (ticket.status === newStatus) return; // Do nothing if status is already the same
+    if (ticket.status === newStatus) return;
 
     try {
       const response = await axios.patch(
         `http://localhost:8080/api/tickets/${ticket._id}`,
-        { status: newStatus, version: ticket.version }, // Send new status and current version
+        { status: newStatus, version: ticket.version },
         { withCredentials: true }
       );
       alert(`Ticket status changed to: ${newStatus}`);
-      onTicketUpdate(response.data); // Update the parent component's state
+      onTicketUpdate(response.data);
     } catch (error) {
       console.error("Failed to update status", error);
       alert(error.response?.data?.message || "Error updating status.");

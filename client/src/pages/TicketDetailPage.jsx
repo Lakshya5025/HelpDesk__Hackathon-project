@@ -1,20 +1,20 @@
-import React, { useEffect, useState, useContext } from "react"; // Import useContext
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { useParams, Link } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext"; // Import AuthContext
-import TicketAssignment from "../components/TicketAssignment"; // Import new component
-import TicketStatusUpdater from "../components/TicketStatusUpdater"; // <-- Import the new component
+import { AuthContext } from "../context/AuthContext";
+import TicketAssignment from "../components/TicketAssignment";
+import TicketStatusUpdater from "../components/TicketStatusUpdater";
 
 function TicketDetailPage() {
   const [ticket, setTicket] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [commentText, setCommentText] = useState("");
-  const { user } = useContext(AuthContext); // Get the logged-in user
+  const { user } = useContext(AuthContext);
   const { id } = useParams();
   const fetchTicket = async () => {
     try {
-      setIsLoading(true); // Set loading before fetch
+      setIsLoading(true);
       const response = await axios.get(
         `http://localhost:8080/api/tickets/${id}`,
         { withCredentials: true }
@@ -41,7 +41,7 @@ function TicketDetailPage() {
         { withCredentials: true }
       );
       setCommentText("");
-      fetchTicket(); // Refetch ticket to show the new comment
+      fetchTicket();
     } catch (error) {
       console.error("Failed to add comment", error);
       alert("Error adding comment.");
@@ -62,7 +62,6 @@ function TicketDetailPage() {
     user && (user.role === "agent" || user.role === "admin");
 
   return (
-    // ... The rest of the JSX is the same
     <div className="ticket-detail-container">
       <Link to="/tickets" className="btn btn-back">
         Back to Tickets

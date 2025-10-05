@@ -5,7 +5,7 @@ import { AuthContext } from "../context/AuthContext";
 function TicketAssignment({ ticket, onTicketUpdate }) {
   const [agents, setAgents] = useState([]);
   const [selectedAgentId, setSelectedAgentId] = useState("");
-  const { user } = useContext(AuthContext); // Get current user from context
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
     if (user && user.role === "admin") {
@@ -42,7 +42,6 @@ function TicketAssignment({ ticket, onTicketUpdate }) {
     }
   };
 
-  // If the user is an admin, show the dropdown menu
   if (user && user.role === "admin") {
     return (
       <div className="assignment-container">
@@ -66,7 +65,6 @@ function TicketAssignment({ ticket, onTicketUpdate }) {
     );
   }
 
-  // If the user is an agent, show a simple "Assign to me" button
   if (user && user.role === "agent") {
     return (
       <div className="assignment-container">
@@ -78,7 +76,6 @@ function TicketAssignment({ ticket, onTicketUpdate }) {
     );
   }
 
-  // If the user is a regular user, this component will not be rendered at all.
   return null;
 }
 

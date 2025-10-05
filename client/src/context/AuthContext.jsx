@@ -15,6 +15,7 @@ export const AuthProvider = ({ children }) => {
         });
         setUser(response.data);
       } catch (error) {
+        console.log(error);
         console.log("No active session found.");
       } finally {
         setIsLoading(false);
