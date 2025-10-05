@@ -8,6 +8,7 @@ import cors from "cors";
 import { idempotencyCheck } from './middleware/idempotencyMiddleware.js';
 import authRoutes from './routes/authRoutes.js';
 import ticketRoutes from './routes/ticketRoutes.js';
+import userRouter from "./routes/userRoutes.js";
 const app = express();
 app.use(express.json());
 app.use(idempotencyCheck);
@@ -15,7 +16,7 @@ app.use(cookieParser());
 app.use(
     cors({
         origin: "http://localhost:5173",
-        methods: ["GET", "POST", "PUT", "DELETE"],
+        methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
         credentials: true,
     })
 );
@@ -23,6 +24,7 @@ app.use(
 
 app.use('/api/', apiLimiter);
 app.use('/api/auth', authRoutes);
+app.use('/api/users', userRouter);
 app.use('/api/tickets', ticketRoutes);
 
 app.get('/', (req, res) => {

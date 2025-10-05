@@ -47,7 +47,6 @@ export const loginUser = async (req, res) => {
             const { _id, name, role } = user;
             const token = generateToken(user._id);
             res.cookie('token', token, {
-                secure: process.env.NODE_ENV !== 'development',
                 sameSite: 'strict',
                 maxAge: 10 * 24 * 60 * 60 * 1000
             }).status(200).json({
@@ -62,3 +61,13 @@ export const loginUser = async (req, res) => {
         res.status(500).json({ message: 'Server Error', error: error.message });
     }
 };
+export const getMe = async (req, res) => {
+    res.status(200).json(req.user);
+};
+
+export const logout = (req, res) => {
+    return res
+        .clearCookie("token")
+        .status(200)
+        .json({ message: "Logout successful." });
+}

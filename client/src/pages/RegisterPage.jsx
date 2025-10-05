@@ -24,6 +24,7 @@ function RegisterPage() {
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
+      console.log(formData);
       await axios.post(API_URL, formData);
       alert("Registration successful! Please log in.");
       navigate("/login");

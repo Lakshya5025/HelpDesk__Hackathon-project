@@ -1,18 +1,16 @@
-import { useState } from "react";
+import { useState, useContext } from "react"; // Import useContext
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { AuthContext } from "../context/AuthContext"; // Import AuthContext
 
 const API_URL = "http://localhost:8080/api/auth/login";
 
 function LoginPage() {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext); // Get the login function from context
 
-  const { email, password } = formData;
-
+  // ... (onChange function is the same)
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
@@ -23,12 +21,10 @@ function LoginPage() {
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log(formData);
       const response = await axios.post(API_URL, formData, {
         withCredentials: true,
       });
-
-      console.log(response.data);
+      login(response.data); // <-- Use the context login function
       alert("Login successful!");
       navigate("/");
     } catch (error) {
@@ -37,6 +33,7 @@ function LoginPage() {
     }
   };
 
+  // ... (return JSX is the same)
   return (
     <div className="form-container">
       <h2>Login</h2>
@@ -44,7 +41,7 @@ function LoginPage() {
         <input
           type="email"
           name="email"
-          value={email}
+          value={formData.email}
           onChange={onChange}
           placeholder="Enter your email"
           required
@@ -52,7 +49,7 @@ function LoginPage() {
         <input
           type="password"
           name="password"
-          value={password}
+          value={formData.password}
           onChange={onChange}
           placeholder="Enter password"
           required
