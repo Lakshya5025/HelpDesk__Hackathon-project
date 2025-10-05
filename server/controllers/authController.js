@@ -72,7 +72,7 @@ export const getMe = async (req, res) => {
 
 export const logout = (req, res) => {
     return res
-        .clearCookie("token")
+        .clearCookie("token", cookieOptions)
         .status(200)
         .json({ message: "Logout successful." });
 }
