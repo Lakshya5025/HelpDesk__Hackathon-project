@@ -3,10 +3,12 @@ dotenv.config();
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
+import { idempotencyCheck } from './middleware/idempotencyMiddleware.js';
 import authRoutes from './routes/authRoutes.js';
 import ticketRoutes from './routes/ticketRoutes.js';
 const app = express();
 app.use(express.json());
+app.use(idempotencyCheck);
 app.use(
     cors({
         origin: "http://localhost:5173",
