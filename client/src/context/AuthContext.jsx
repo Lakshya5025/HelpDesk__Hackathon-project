@@ -1,31 +1,28 @@
+import React, { createContext, useState, useEffect } from "react";
 import axios from "axios";
-import React, { createContext, useState } from "react";
-import { useEffect } from "react";
 
 export const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [isLoading, setIsLoading] = useState(true); // Add a loading state
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
-    // This function will run once when the app loads
     const checkUserSession = async () => {
       try {
-        // Check for a valid cookie by calling the /me endpoint
-        const response = await axios.get("http://localhost:5001/api/auth/me", {
+        const response = await axios.get("http://localhost:8080/api/auth/me", {
           withCredentials: true,
         });
-        setUser(response.data); // If successful, set the user state
+        setUser(response.data);
       } catch (error) {
-        // If it fails (e.g., 401 error), it means no valid cookie, so user stays null
-        console.log("No active session found.", error);
+        console.log("No active session found.");
       } finally {
-        setIsLoading(false); // Stop loading once the check is complete
+        setIsLoading(false);
       }
     };
-
     checkUserSession();
   }, []);
+
   const login = (userData) => {
     setUser(userData);
   };
