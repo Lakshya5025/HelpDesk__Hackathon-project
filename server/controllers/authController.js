@@ -29,7 +29,7 @@ export const registerUser = async (req, res) => {
             httpOnly: true,
             secure: true,
             sameSite: 'none',
-            domain: process.env.COOKIE_DOMAIN,
+            domain: undefined,
             maxAge: 30 * 24 * 60 * 60 * 1000
         }).status(201).json(user);
     } catch (error) {
@@ -52,7 +52,7 @@ export const loginUser = async (req, res) => {
                 httpOnly: true,
                 secure: true,
                 sameSite: 'none',
-                domain: process.env.COOKIE_DOMAIN,
+                domain: undefined,
                 maxAge: 30 * 24 * 60 * 60 * 1000
             }).status(200).json({
                 _id, name, email, role,
@@ -75,6 +75,7 @@ export const logout = (req, res) => {
         httpOnly: true,
         secure: true,
         sameSite: 'none',
+        domain: undefined
     };
 
     return res
