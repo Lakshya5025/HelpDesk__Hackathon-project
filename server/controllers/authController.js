@@ -26,8 +26,9 @@ export const registerUser = async (req, res) => {
         const user = await User.create({ name, email, password, role });
         const token = generateToken(user._id);
         res.cookie('token', token, {
-            secure: process.env.NODE_ENV !== 'development',
-            sameSite: 'strict',
+            httpOnly: true,
+            secure: true,
+            sameSite: 'none',
             maxAge: 10 * 24 * 60 * 60 * 1000
         }).status(201).json(user);
     } catch (error) {
@@ -47,7 +48,9 @@ export const loginUser = async (req, res) => {
             const { _id, name, role } = user;
             const token = generateToken(user._id);
             res.cookie('token', token, {
-                sameSite: 'strict',
+                httpOnly: true,
+                secure: true,
+                sameSite: 'none',
                 maxAge: 10 * 24 * 60 * 60 * 1000
             }).status(200).json({
                 _id, name, email, role,
