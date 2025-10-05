@@ -61,8 +61,8 @@ function LoginPage() {
         Don't have an account? <Link to="/register">Register</Link>
       </p>
       <div>
-        <div>User: email:user@example.com ||| password:password123</div>
-        <div>Agent: email: agent@example.co ||| password:password123</div>
+        <div>User: email: user@example.com ||| password:password123</div>
+        <div>Agent: email: agent@example.com ||| password:password123</div>
         <div>Admin: email: admin@example.com ||| password:password123</div>
       </div>
     </div>
