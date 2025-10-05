@@ -26,7 +26,7 @@ function RegisterPage() {
     try {
       console.log(formData);
       await axios.post(API_URL, formData);
-      alert("Registration successful! Please log in.");
+      console.log("Registration successful! Please log in.");
       navigate("/login");
     } catch (error) {
       alert("Registration failed. The email might already be in use.");
@@ -62,7 +62,9 @@ function RegisterPage() {
           placeholder="Enter password"
           required
         />
-        <button type="submit">Register</button>
+        <button type="submit" className="btn">
+          Register
+        </button>
       </form>
       <p>
         Already have an account? <Link to="/login">Login</Link>

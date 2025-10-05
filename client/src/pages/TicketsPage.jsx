@@ -49,11 +49,11 @@ function TicketsPage() {
                   Created on: {new Date(ticket.createdAt).toLocaleDateString()}
                 </p>
               </div>
-              <div>
+              <div className="ticket-status-button">
                 <span className={`status status-${ticket.status}`}>
                   {ticket.status}
                 </span>
-                <Link to={`/tickets/${ticket._id}`} className="btn btn-sm">
+                <Link to={`/tickets/${ticket._id}`} className=" btn-sm">
                   View
                 </Link>
               </div>

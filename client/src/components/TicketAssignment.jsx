@@ -34,7 +34,7 @@ function TicketAssignment({ ticket, onTicketUpdate }) {
         { assignedTo: agentIdToAssign, version: ticket.version },
         { withCredentials: true }
       );
-      alert("Ticket assigned successfully!");
+      console.log("Ticket assigned successfully!");
       onTicketUpdate(response.data);
     } catch (error) {
       console.error("Failed to assign ticket", error);

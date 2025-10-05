@@ -26,7 +26,7 @@ function LoginPage() {
 
       login(response.data);
 
-      alert("Login successful!");
+      console.log("Login successful!");
       navigate("/");
     } catch (error) {
       alert("Login failed. Check your credentials.");
@@ -54,7 +54,9 @@ function LoginPage() {
           placeholder="Enter password"
           required
         />
-        <button type="submit">Login</button>
+        <button type="submit" className="btn">
+          Login
+        </button>
       </form>
       <p>
         Don't have an account? <Link to="/register">Register</Link>

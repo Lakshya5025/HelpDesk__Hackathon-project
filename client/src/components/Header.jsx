@@ -15,7 +15,6 @@ function Header() {
         { withCredentials: true }
       );
       logout();
-      alert("You have been logged out.");
       navigate("/login");
     } catch (error) {
       console.error("Logout failed", error);
@@ -32,7 +31,7 @@ function Header() {
           <>
             <li>Welcome, {user.name}</li>
             <li>
-              <button className="btn" onClick={onLogout}>
+              <button className="logout-btn" onClick={onLogout}>
                 Logout
               </button>
             </li>

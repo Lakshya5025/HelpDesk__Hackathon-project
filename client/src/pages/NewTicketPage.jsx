@@ -22,7 +22,7 @@ function NewTicketPage() {
       await axios.post("http://localhost:8080/api/tickets", formData, {
         withCredentials: true,
       });
-      alert("Ticket created successfully!");
+      console.log("Ticket created successfully!");
       navigate("/tickets");
     } catch (error) {
       console.error("Failed to create ticket", error);
