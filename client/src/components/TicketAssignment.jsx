@@ -5,7 +5,9 @@ const API_URL = `${import.meta.env.VITE_API_URL}`;
 
 function TicketAssignment({ ticket, onTicketUpdate }) {
   const [agents, setAgents] = useState([]);
-  const [selectedAgentId, setSelectedAgentId] = useState("");
+  const [selectedAgentId, setSelectedAgentId] = useState(
+    ticket.assignedTo || ""
+  );
   const { user } = useContext(AuthContext);
 
   useEffect(() => {
@@ -25,15 +27,22 @@ function TicketAssignment({ ticket, onTicketUpdate }) {
   }, [user]);
 
   const handleAssign = async (agentIdToAssign) => {
+    console.log(agentIdToAssign);
     if (!agentIdToAssign) {
       return alert("No agent selected.");
     }
     try {
+      console.log(`${API_URL}/tickets/${ticket._id}`);
       const response = await axios.patch(
-        `${API_URL}/tickets/${ticket._id}`,
-        { assignedTo: agentIdToAssign, version: ticket.version },
+        `${API_URL}/api/tickets/${ticket._id}`,
+        {
+          assignedTo: agentIdToAssign,
+          status: "assigned",
+          version: ticket.version,
+        },
         { withCredentials: true }
       );
+      alert("Ticket assigned");
       console.log("Ticket assigned successfully!");
       onTicketUpdate(response.data);
     } catch (error) {

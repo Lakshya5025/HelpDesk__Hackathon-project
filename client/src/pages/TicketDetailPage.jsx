@@ -68,8 +68,16 @@ function TicketDetailPage() {
       </Link>
       {isAgentOrAdmin && (
         <div className="admin-panel">
-          <TicketAssignment ticket={ticket} onTicketUpdate={setTicket} />
-          <TicketStatusUpdater ticket={ticket} onTicketUpdate={setTicket} />
+          {!ticket.assignedTo && (
+            <TicketAssignment ticket={ticket} onTicketUpdate={setTicket} />
+          )}
+          {ticket.status !== "closed" && (
+            <TicketStatusUpdater
+              ticket={ticket}
+              user={user._id}
+              onTicketUpdate={setTicket}
+            />
+          )}
         </div>
       )}
 

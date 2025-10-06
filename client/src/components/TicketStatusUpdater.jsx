@@ -2,14 +2,14 @@ import React from "react";
 import axios from "axios";
 const API_URL = `${import.meta.env.VITE_API_URL}/api/tickets`;
 
-function TicketStatusUpdater({ ticket, onTicketUpdate }) {
+function TicketStatusUpdater({ ticket, onTicketUpdate, user }) {
   const handleStatusChange = async (newStatus) => {
     if (ticket.status === newStatus) return;
 
     try {
       const response = await axios.patch(
         `${API_URL}/${ticket._id}`,
-        { status: newStatus, version: ticket.version },
+        { status: newStatus, assignedTo: user, version: ticket.version },
         { withCredentials: true }
       );
       alert(`Ticket status changed to: ${newStatus}`);

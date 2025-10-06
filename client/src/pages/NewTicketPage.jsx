@@ -53,7 +53,9 @@ function NewTicketPage() {
           placeholder="Please describe the issue in detail."
           rows={5}
           required></textarea>
-        <button type="submit">Submit Ticket</button>
+        <button className="btn" type="submit">
+          Submit Ticket
+        </button>
       </form>
     </div>
   );

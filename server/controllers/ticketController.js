@@ -26,22 +26,20 @@ export const getTickets = async (req, res) => {
         const offset = parseInt(req.query.offset) || 0;
 
         let query = {};
-
-        if (req.user.role !== 'agent' && req.user.role !== 'admin') {
-            query.user = req.user._id;
-        }
-
-        if (req.query.search) {
+        if (req.user.role === 'agent') {
             query.$or = [
-                { title: { $regex: req.query.search, $options: 'i' } },
-                { description: { $regex: req.query.search, $options: 'i' } },
+                { assignedTo: req.user._id },
+                { assignedTo: null }
             ];
+        } else if (req.user.role !== 'admin') {
+            query.user = req.user._id;
         }
 
         const tickets = await Ticket.find(query)
             .limit(limit)
             .skip(offset)
             .sort({ createdAt: -1 });
+        console.log(tickets);
 
         res.status(200).json({
             items: tickets,
@@ -63,12 +61,14 @@ export const getTicketById = async (req, res) => {
 
 
         const isOwner = ticket.user.toString() === req.user._id.toString();
-        const isAgentOrAdmin = req.user.role === 'agent' || req.user.role === 'admin';
-
-        if (!isOwner && !isAgentOrAdmin) {
+        const isAgent = req.user.role === 'agent';
+        const isAdmin = req.user.role === 'admin'
+        if (ticket.assignedTo && isAgent && ticket.assignedTo.toString() != req.user._id.toString()) {
             return res.status(401).json({ message: 'Not authorized.' });
         }
-
+        if (!isOwner && !isAgent && !isAdmin) {
+            return res.status(401).json({ message: 'Not authorized.' });
+        }
         res.status(200).json(ticket);
     } catch (error) {
         res.status(500).json({ message: 'Server Error', error: error.message });

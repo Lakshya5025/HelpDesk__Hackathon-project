@@ -62,7 +62,11 @@ function CreateAgentPage() {
           placeholder="Enter password"
           required
         />
-        <select name="role" value={role} onChange={onChange}>
+        <select
+          className="assignment-container"
+          name="role"
+          value={role}
+          onChange={onChange}>
           <option value="agent">Agent</option>
           <option value="admin">Admin</option>
         </select>

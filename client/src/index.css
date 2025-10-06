@@ -193,6 +193,10 @@ button {}
   background-color: #6c757d;
 }
 
+.status-assigned {
+  background-color: #2f9eff;
+}
+
 
 /* ... keep all existing styles ... */
 
