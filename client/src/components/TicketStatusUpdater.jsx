@@ -4,8 +4,7 @@ const API_URL = `${import.meta.env.VITE_API_URL}/api/tickets`;
 
 function TicketStatusUpdater({ ticket, onTicketUpdate, user }) {
   const handleStatusChange = async (newStatus) => {
-    if (ticket.status === newStatus) return;
-
+    if (ticket.status === newStatus || ticket.comments.length == 0) return;
     try {
       const response = await axios.patch(
         `${API_URL}/${ticket._id}`,
@@ -19,7 +18,6 @@ function TicketStatusUpdater({ ticket, onTicketUpdate, user }) {
       alert(error.response?.data?.message || "Error updating status.");
     }
   };
-
   return (
     <div className="status-updater-container">
       <h4>Update Status</h4>
