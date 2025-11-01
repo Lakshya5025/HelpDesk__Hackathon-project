@@ -68,14 +68,13 @@ function TicketDetailPage() {
       </Link>
       {isAgentOrAdmin && (
         <div className="admin-panel">
-          {}
-          {ticket.user != user._id && !ticket.assignedTo && (
+          {ticket.user !== user._id && !ticket.assignedTo && (
             <TicketAssignment ticket={ticket} onTicketUpdate={setTicket} />
           )}
-          {ticket.status !== "closed" && (
+          {(ticket.status !== "closed" || user.role === "admin") && (
             <TicketStatusUpdater
               ticket={ticket}
-              user={user._id}
+              user={user}
               onTicketUpdate={setTicket}
             />
           )}
@@ -111,7 +110,8 @@ function TicketDetailPage() {
           <p>No comments yet.</p>
         )}
       </div>
-      {ticket.status == "new" && ticket.assignedTo ? (
+      {(ticket.status == "new" || ticket.status == "assigned") &&
+      ticket.assignedTo ? (
         <div className="comment-form">
           <h3>Add a Comment</h3>
           <form onSubmit={onCommentSubmit}>

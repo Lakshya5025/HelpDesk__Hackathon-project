@@ -3,12 +3,14 @@ import axios from "axios";
 const API_URL = `${import.meta.env.VITE_API_URL}/api/tickets`;
 
 function TicketStatusUpdater({ ticket, onTicketUpdate, user }) {
+  console.log("Hello");
   const handleStatusChange = async (newStatus) => {
     if (ticket.status === newStatus || ticket.comments.length == 0) return;
+    console.log("current status != new status");
     try {
       const response = await axios.patch(
         `${API_URL}/${ticket._id}`,
-        { status: newStatus, assignedTo: user, version: ticket.version },
+        { status: newStatus, assignedTo: user._id, version: ticket.version },
         { withCredentials: true }
       );
       alert(`Ticket status changed to: ${newStatus}`);
@@ -22,8 +24,8 @@ function TicketStatusUpdater({ ticket, onTicketUpdate, user }) {
     <div className="status-updater-container">
       <h4>Update Status</h4>
       <div className="status-buttons">
-        {ticket.status !== "open" && (
-          <button onClick={() => handleStatusChange("open")} className="btn">
+        {ticket.status === "closed" && user.role === "admin" && (
+          <button onClick={() => handleStatusChange("new")} className="btn">
             Open Ticket
           </button>
         )}
