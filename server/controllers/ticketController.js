@@ -39,7 +39,6 @@ export const getTickets = async (req, res) => {
             .limit(limit)
             .skip(offset)
             .sort({ createdAt: -1 });
-        console.log(tickets);
 
         res.status(200).json({
             items: tickets,
