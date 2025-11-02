@@ -9,6 +9,7 @@ import { idempotencyCheck } from './middleware/idempotencyMiddleware.js';
 import authRoutes from './routes/authRoutes.js';
 import ticketRoutes from './routes/ticketRoutes.js';
 import userRouter from "./routes/userRoutes.js";
+import { transporter } from "./utils/email.js";
 const app = express();
 app.set('trust proxy', 1);
 app.use(express.json());
@@ -39,7 +40,8 @@ async function startServer() {
     try {
         await mongoose.connect(process.env.MONGO_URL);
         console.log("DB connected successfully");
-
+        transporter.verify();
+        console.log("Mail service is ready")
         app.listen(process.env.PORT, () => {
             console.log(`Server is listening on ${process.env.SERVER_URL}`);
         });
