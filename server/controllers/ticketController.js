@@ -87,8 +87,16 @@ export const updateTicket = async (req, res) => {
             return res.status(409).json({ message: 'Conflict: Ticket has been modified. Please refresh.' });
         }
 
+        if (status === 'closed' && ticket.comments.length === 0) {
+            return res.status(400).json({ message: 'Cannot close a ticket without any comments/resolution.' });
+        }
+
         if (assignedTo) {
             if (req.user.role === 'admin') {
+
+                if (ticket.status !== 'new' && ticket.assignedTo) {
+                    return res.status(400).json({ message: 'Admins can only assign new tickets.' });
+                }
                 ticket.assignedTo = assignedTo;
             }
             else if (req.user.role === 'agent') {
@@ -102,7 +110,14 @@ export const updateTicket = async (req, res) => {
             }
         }
 
-        ticket.status = status || ticket.status;
+        if (status) {
+            if (req.user.role === 'agent') {
+                if (ticket.status === 'closed' && status !== 'closed') {
+                    return res.status(403).json({ message: 'Agents cannot reopen closed tickets.' });
+                }
+            }
+            ticket.status = status;
+        }
 
         const updatedTicket = await ticket.save();
         res.status(200).json(updatedTicket);
@@ -110,8 +125,6 @@ export const updateTicket = async (req, res) => {
         res.status(500).json({ message: 'Server Error', error: error.message });
     }
 };
-
-
 
 export const addComment = async (req, res) => {
     try {
